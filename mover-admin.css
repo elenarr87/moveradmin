@@ -1,0 +1,419 @@
+/* Mover Admin CSS - New Design */
+
+/* EDIT MODE INDICATOR */
+body.mover-edit-active::before {
+  content: "🔧 Edit Mode Active";
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 10000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* EDITABLE WRAPPER */
+.mover-editable-wrapper {
+  position: relative;
+  transition: outline 0.2s ease;
+  margin: 16px 0;
+}
+
+.mover-editable-wrapper:hover {
+  outline: 2px dashed #3b82f6;
+  outline-offset: 4px;
+}
+
+/* SECTION CONTROL BUTTONS */
+.mover-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.mover-editable-wrapper:hover .mover-controls {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mover-controls button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.mover-controls button:hover {
+  background: #f9fafb;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.mover-btn-edit { color: #3b82f6; }
+.mover-btn-delete { color: #ef4444; }
+.mover-btn-up, .mover-btn-down { color: #6b7280; }
+
+/* GLOBAL SAVE BUTTON */
+#mover-global-save {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(16,185,129,0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#mover-global-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(16,185,129,0.5);
+}
+
+#mover-global-save:active {
+  transform: translateY(0);
+}
+
+#mover-global-save.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* EDIT MODAL */
+.mover-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  animation: fadeIn 0.2s ease;
+}
+
+.mover-modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.mover-modal h2 {
+  margin: 0 0 20px 0;
+  color: #1e293b;
+  font-size: 24px;
+}
+
+#mover-edit-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+#mover-edit-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.mover-modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+.mover-btn-save {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mover-btn-save:hover {
+  background: #059669;
+}
+
+.mover-btn-cancel {
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mover-btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+/* ADD SECTION BUTTON */
+#mover-add-section {
+  display: block;
+  margin: 40px auto;
+  padding: 16px 32px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#mover-add-section:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+}
+
+/* TOAST NOTIFICATION */
+.mover-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  z-index: 10002;
+  animation: slideInRight 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mover-toast.success { background: #10b981; }
+.mover-toast.error { background: #ef4444; }
+.mover-toast.info { background: #3b82f6; }
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* RESPONSIVE (mobile) */
+@media (max-width: 768px) {
+  .mover-controls {
+    flex-wrap: wrap;
+    max-width: 200px;
+  }
+
+  .mover-controls button {
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .mover-controls button span {
+    display: none; /* hide text, keep only icons */
+  }
+
+  #mover-global-save {
+    padding: 12px 20px;
+    font-size: 14px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Image Upload Styles */
+.img-upload {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-upload:hover {
+  border-color: #007bff;
+}
+
+.img-upload img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.img-upload::before {
+  content: "Click to upload image";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #6c757d;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.img-upload.has-image::before {
+  display: none;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.gallery-grid .img-upload {
+  padding: 1rem;
+}
+
+.add-image-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.add-image-btn:hover {
+  background: #218838;
+}
+
+/* CTA Button */
+.cta-button {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.cta-button:hover {
+  background: #0056b3;
+}
+
+/* Section Choices Modal */
+.mover-section-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.mover-section-choices button {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.mover-section-choices button:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+/* ADMIN CONTROLS */
+#mover-admin-controls {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10000;
+}
+
+#mover-admin-controls button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+#mover-admin-controls button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#mover-admin-controls button:active {
+  transform: translateY(0);
+}
+
+#mover-clear-local {
+  background: #dc2626 !important;
+}
+
+#mover-clear-local:hover {
+  background: #b91c1c !important;
+}
